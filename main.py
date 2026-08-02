@@ -1,65 +1,14 @@
 import telebot
 
-from utils.spelling import fix_punctuation
-from utils.converter import convert_ogg_to_wav
-from utils.recognition import voice_to_text
-from utils.download_file import download_voice_file
-from utils.remover import remove_audio_files
-
-
-from db.db import Users
-
-
-
 from config import token
+from utils.handlers import register_handlers
+
 
 
 TOKEN = token
 bot = telebot.TeleBot(TOKEN)
 
-
-db = Users()
-db.init_db()
-
-
-
-@bot.message_handler(commands=['start'])
-def welcome(message):
-    user_id = message.from_user.id
-    name = message.from_user.first_name
-    username = message.from_user.username
-
-
-
-    bot.send_message(
-        message.chat.id,
-         text=f"👋 Hi, <b>{name}</b>! I’m a bot you can forward 🎙 voice messages from friends to, and I’ll send you the transcription.",
-         parse_mode='HTML'
-
-    )
-
-
-
-@bot.message_handler(content_types=['voice'])
-def handle_voice(message):
-
-
-    download_voice_file(bot, message)
-
-    convert_ogg_to_wav('audio/voice.ogg', "audio/voice.wav")
-
-
-    text = voice_to_text()
-
-    result = fix_punctuation(text) # receive text with punctuation and spelling
-
-    bot.reply_to(message, result)
-
-    remove_audio_files()
-
-
-
-
+register_handlers(bot)
 
 
 if __name__ == '__main__':

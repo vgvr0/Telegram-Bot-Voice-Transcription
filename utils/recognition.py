@@ -1,7 +1,13 @@
 import speech_recognition as sr
+from db.db import Users
 
 
-def voice_to_text():
+
+db = Users()
+
+
+
+def voice_to_text(user_id):
     # Transcribe the audio to text
 
     try:
@@ -10,7 +16,10 @@ def voice_to_text():
             audio_data = recognizer.record(source)
 
 
-            text = recognizer.recognize_google(audio_data, language='en')
+            language = db.get_language(user_id)
+
+
+            text = recognizer.recognize_google(audio_data, language=language)
 
 
         return text
