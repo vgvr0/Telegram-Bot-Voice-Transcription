@@ -1,0 +1,13 @@
+{
+  "welcome_msg_en-US": "👋 Hi, <b>name</b>! I’m a bot you can forward 🎙 voice messages from friends to, and I’ll send you the transcription. Change language - /language",
+  "welcome_msg_ru-RU": "👋 Привет, <b>name</b>! Я бот, которому ты можешь пересылать 🎙 голосовые сообщения от друзей, а я пришлю тебе их расшифровку. Сменить язык — /language",
+  "welcome_msg_kk-KZ": "👋 Сәлем, <b>name</b>! Мен — достарыңнан келген 🎙 дауыстық хабарламаларды маған жіберсең, олардың мәтінге айналған нұсқасын жіберетін ботпын. Тілді өзгерту — /language",
+
+  "select_language_en-US": "Select language \uD83D\uDC47",
+  "select_language_ru-RU": "Выберите язык 👇",
+  "select_language_kk-KZ": "Тілді таңдаңыз 👇",
+
+  "unknow_text_en-US": "Sorry, but I don't know how to process text.",
+  "unknow_text_ru-RU": "Прости, но я не умею обрабатывать текст",
+  "unknow_text_kk-KZ": "Кешіріңіз, бірақ мәтінді қалай өңдеу керектігін білмеймін."
+}
