@@ -10,6 +10,7 @@ from bot.keyboard import default_keyboard
 
 from db.db import Users
 
+from bot.translation import translate
 
 
 db = Users()
@@ -29,7 +30,7 @@ def register_handlers(bot):
         db.manage_user(user_id, name, username)
 
 
-        if db.get_language(user_id) == None:
+        if db.get_language(user_id) is None:
             bot.send_message(
                 message.chat.id,
                 text=f"👋 Hi, <b>{name}</b>! I’m a bot you can forward 🎙 voice messages from friends to, and I’ll send you the transcription. Select the bot's interface language and the language to be used for transcribing voice messages.\n\nChoice your language 👇",
@@ -40,15 +41,11 @@ def register_handlers(bot):
 
 
         else:
-            with open("messages.json", "r", encoding="utf-8") as f:
-                data = json.load(f)
-
-
-            language = db.get_language(user_id)
+            answer = translate(user_id, 'welcome_msg_')
 
             bot.send_message(
                 message.chat.id,
-                text=data[f'welcome_msg_{language}'],
+                text=answer,
                 parse_mode='HTML'
 
             )
@@ -61,16 +58,9 @@ def register_handlers(bot):
     @bot.message_handler(commands=['language'])
     def change_language(message):
         user_id = message.from_user.id
+        answer = translate(user_id, 'select_language_')
 
-
-        with open("messages.json", "r", encoding="utf-8") as f:
-            data = json.load(f)
-
-        language = db.get_language(user_id)
-
-        bot.send_message(message.chat.id,
-                         text=data[f'select_language_{language}'],
-                         reply_markup=default_keyboard())
+        bot.send_message(message.chat.id, text=answer, reply_markup=default_keyboard())
 
 
 
@@ -101,7 +91,9 @@ def register_handlers(bot):
     @bot.message_handler(content_types=['text'])
     def text_input(message):
         user_id = message.from_user.id
+
         text = message.text
+
 
 
         if text == '🇺🇸 English':
@@ -126,11 +118,6 @@ def register_handlers(bot):
 
 
         else:
-            with open("messages.json", "r", encoding="utf-8") as f:
-                data = json.load(f)
+            answer = translate(user_id, 'unknow_text_', )
 
-            language = db.get_language(user_id)
-
-            bot.send_message(message.chat.id, data[f'unknow_text_{language}'])
-
-
+            bot.send_message(message.chat.id, answer, reply_markup=telebot.types.ReplyKeyboardRemove())
