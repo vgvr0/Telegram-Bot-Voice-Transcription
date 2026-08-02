@@ -1,18 +1,42 @@
 import telebot
 
-
 from utils.spelling import fix_punctuation
 from utils.converter import convert_ogg_to_wav
 from utils.recognition import voice_to_text
 from utils.download_file import download_voice_file
 from utils.remover import remove_audio_files
 
-from config import token
 
+from db.db import Users
+
+
+
+from config import token
 
 
 TOKEN = token
 bot = telebot.TeleBot(TOKEN)
+
+
+db = Users()
+db.init_db()
+
+
+
+@bot.message_handler(commands=['start'])
+def welcome(message):
+    user_id = message.from_user.id
+    name = message.from_user.first_name
+    username = message.from_user.username
+
+
+
+    bot.send_message(
+        message.chat.id,
+         text=f"👋 Hi, <b>{name}</b>! I’m a bot you can forward 🎙 voice messages from friends to, and I’ll send you the transcription.",
+         parse_mode='HTML'
+
+    )
 
 
 
@@ -39,4 +63,4 @@ def handle_voice(message):
 
 
 if __name__ == '__main__':
-    bot.polling()
+    bot.infinity_polling()
