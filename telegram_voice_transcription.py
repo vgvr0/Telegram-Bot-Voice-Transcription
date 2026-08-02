@@ -48,7 +48,6 @@ def handle_voice(message):
             text = recognizer.recognize_google(audio_data, language="en")
 
 
-
         # Send the transcription back to the user
         bot.reply_to(message, f"Transcription: {text}")
 
