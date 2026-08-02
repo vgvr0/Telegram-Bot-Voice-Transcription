@@ -8,23 +8,29 @@ Requirements
 - The telebot and speech_recognition libraries (installable via pip)
 - A Telegram bot token
 
-Installation
+## Installation
 
 1. Clone this repository or download the script file.
 
 2. Install the dependencies by running the following command in your terminal:
 ```
-    pip install pyTelegramBotAPI SpeechRecognition
+pip install pyTelegramBotAPI SpeechRecognition
 ```
-3. Obtain a token for your Telegram bot by following the instructions in the official Telegram documentation.
 
+3. Install the ollama llama3.2:3b model.
+```
+ollama run llama3.2:3b
+```
+
+
+4. Obtain a token for your Telegram bot by following the instructions in the official Telegram documentation.
 Usage
 
 1. Replace "your_token_here" in the code with your Telegram bot token.
 
 2. Run the Python script:
 ```
-    python script_name.py
+python script_name.py
 ```
 3. Send a voice message to your Telegram bot. The bot will reply with the transcription of the audio.
 

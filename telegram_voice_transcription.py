@@ -1,6 +1,10 @@
 import telebot
 from pydub import AudioSegment
 import speech_recognition as sr
+
+
+
+from commaSetup import fix_punctuation
 from config import token
 
 
@@ -17,7 +21,7 @@ def convert_ogg_to_mp3(input_file, output_file):
     audio = AudioSegment.from_ogg(input_file)
 
     # Export as MP3 with desired bitrate
-    audio.export(output_file, format="wav", bitrate="192k")
+    audio.export(output_file, format="wav")
 
 
     return 'Done.'
@@ -48,8 +52,11 @@ def handle_voice(message):
             text = recognizer.recognize_google(audio_data, language="en")
 
 
-        # Send the transcription back to the user
-        bot.reply_to(message, f"Transcription: {text}")
+
+        result = fix_punctuation(text) # receive text with punctuation and spelling
+
+
+        bot.reply_to(message, result)
 
 
 
