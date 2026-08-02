@@ -1,9 +1,30 @@
 import telebot
+from pydub import AudioSegment
 import speech_recognition as sr
+from config import token
+
+
 
 # Set up your Telegram bot token
-TOKEN = "your_token_here"
+TOKEN = token
 bot = telebot.TeleBot(TOKEN)
+
+
+
+
+def convert_ogg_to_mp3(input_file, output_file):
+    # Load the OGG file
+    audio = AudioSegment.from_ogg(input_file)
+
+    # Export as MP3 with desired bitrate
+    audio.export(output_file, format="wav", bitrate="192k")
+
+
+    return 'Done.'
+
+
+
+
 
 @bot.message_handler(content_types=['voice'])
 def handle_voice(message):
@@ -12,14 +33,27 @@ def handle_voice(message):
         file_info = bot.get_file(message.voice.file_id)
         downloaded_file = bot.download_file(file_info.file_path)
 
+        with open("voice.ogg", 'wb') as f:
+            f.write(downloaded_file)
+
+        convert_ogg_to_mp3('voice.ogg', "voice.wav")
+
+
         # Transcribe the audio to text
         recognizer = sr.Recognizer()
-        with sr.AudioFile(downloaded_file) as source:
+        with sr.AudioFile('voice.wav') as source:
             audio_data = recognizer.record(source)
+
+
             text = recognizer.recognize_google(audio_data, language="en")
+
+
 
         # Send the transcription back to the user
         bot.reply_to(message, f"Transcription: {text}")
+
+
+
     except Exception as e:
         bot.reply_to(message, f"Error processing the audio: {e}")
 
