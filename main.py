@@ -1,14 +1,14 @@
 import telebot
 
 from config import token
-from utils.handlers import register_handlers
+from bot.handlers import register_handlers
 
 
 
-TOKEN = token
-bot = telebot.TeleBot(TOKEN)
+bot = telebot.TeleBot(token)
 
 register_handlers(bot)
+
 
 
 if __name__ == '__main__':

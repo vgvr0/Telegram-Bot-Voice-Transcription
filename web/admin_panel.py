@@ -1,0 +1,54 @@
+from flask import Flask, render_template, redirect, session, request
+
+from db.db import Users
+
+
+from config import password, secret, login
+
+
+app = Flask(__name__)
+
+
+
+app.secret_key = secret
+
+
+
+@app.route("/", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        if request.form["password"] == password and request.form['login'] == login:
+            session["ok"] = True
+            return redirect("/home")
+
+
+        return render_template('login.html')
+
+    return render_template('login.html')
+
+
+
+
+@app.route("/home")
+def secret():
+    if not session.get("ok"):
+        return redirect("/")
+
+
+    db = Users()
+    user = db.get_users()
+
+    return render_template('index.html', users=user)
+
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
+
+
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
