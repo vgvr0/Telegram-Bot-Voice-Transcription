@@ -96,3 +96,21 @@ class Users:
 
 
             return language[0]
+
+
+    def get_users(self):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+
+
+            cursor.execute('SELECT * FROM Users')
+            users = cursor.fetchall()
+
+
+            print(users)
+            return users
+
+
+if __name__ == '__main__':
+    db = Users()
+    db.get_users()
