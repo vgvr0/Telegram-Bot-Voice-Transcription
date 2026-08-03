@@ -1,22 +1,18 @@
-import telebot
-import json
-
 from utils.spelling import fix_punctuation
 from utils.converter import convert_ogg_to_wav
 from utils.recognition import voice_to_text
 from utils.download_file import download_voice_file
-from utils.remover import remove_audio_files
-from bot.keyboard import default_keyboard
 
 from db.db import Users
-
+from bot.sender_message import send_message_with_keyboard, send_message_without_keyboard
 from bot.translation import translate
+
+
+
 
 
 db = Users()
 db.init_db()
-
-
 
 
 def register_handlers(bot):
@@ -31,24 +27,13 @@ def register_handlers(bot):
 
 
         if db.get_language(user_id) is None:
-            bot.send_message(
-                message.chat.id,
-                text=f"👋 Hi, <b>{name}</b>! I’m a bot you can forward 🎙 voice messages from friends to, and I’ll send you the transcription. Select the bot's interface language and the language to be used for transcribing voice messages.\n\nChoice your language 👇",
-                reply_markup=default_keyboard(),
-                parse_mode='HTML'
-
-            )
+            send_message_with_keyboard(bot, message, f"👋 Hi, <b>{name}</b>! I’m a bot you can forward 🎙 voice messages from friends to, and I’ll send you the transcription. Select the bot's interface language and the language to be used for transcribing voice messages.\n\nChoice your language 👇")
 
 
         else:
             answer = translate(user_id, 'welcome_msg_')
 
-            bot.send_message(
-                message.chat.id,
-                text=answer,
-                parse_mode='HTML'
-
-            )
+            send_message_without_keyboard(bot, message, answer.replace('name', name))
 
 
 
@@ -60,7 +45,7 @@ def register_handlers(bot):
         user_id = message.from_user.id
         answer = translate(user_id, 'select_language_')
 
-        bot.send_message(message.chat.id, text=answer, reply_markup=default_keyboard())
+        send_message_with_keyboard(bot, message, answer)
 
 
 
@@ -80,9 +65,6 @@ def register_handlers(bot):
 
         bot.reply_to(message, result)
 
-        remove_audio_files()
-
-
 
 
 
@@ -98,21 +80,21 @@ def register_handlers(bot):
 
         if text == '🇺🇸 English':
             db.set_language(user_id, 'en-US')
-            bot.send_message(message.chat.id, '⚙️ The language is installed', reply_markup=telebot.types.ReplyKeyboardRemove())
+            send_message_without_keyboard(bot, message, '⚙️ The language is installed')
 
 
 
 
         elif text == '🇰🇿 Қазақ':
             db.set_language(user_id, 'kk-KZ')
-            bot.send_message(message.chat.id, '⚙️ Тіл орнатылған', reply_markup=telebot.types.ReplyKeyboardRemove())
+            send_message_without_keyboard(bot, message, '⚙️ Тіл орнатылған')
 
 
 
 
         elif text == '🇷🇺 Русский':
             db.set_language(user_id, 'ru-RU')
-            bot.send_message(message.chat.id, '⚙️ Язык установлен', reply_markup=telebot.types.ReplyKeyboardRemove())
+            send_message_without_keyboard(bot, message, "⚙️ Язык установлен")
 
 
 
@@ -120,4 +102,4 @@ def register_handlers(bot):
         else:
             answer = translate(user_id, 'unknow_text_', )
 
-            bot.send_message(message.chat.id, answer, reply_markup=telebot.types.ReplyKeyboardRemove())
+            send_message_without_keyboard(bot, message, answer)

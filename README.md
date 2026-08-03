@@ -1,41 +1,149 @@
-# Audio to Text Transcription in Telegram Bot
+# Telegram Bot — Voice Transcription
 
-This Python script utilizes the telebot library to create a Telegram bot that can transcribe audio to text using the speech_recognition library.
+A Telegram bot that transcribes voice messages into text.
 
-Requirements
+You can forward voice messages from friends (or send your own), and the bot replies with the transcription. It supports multiple interface languages and uses AI to fix punctuation and spelling.
+
+## Features
+
+- Transcribes Telegram voice messages (`.ogg`) to text
+- Multi-language UI and speech recognition (English, Kazakh, Russian)
+- Automatic punctuation and spelling fixes via Ollama (`llama3.2:3b`)
+- Simple setup with the included installer
+
+## Requirements
 
 - Python 3.x
-- The telebot and speech_recognition libraries (installable via pip)
-- A Telegram bot token
+- Internet connection (Google Speech Recognition API + Ollama)
+- A Telegram bot token from [@BotFather](https://t.me/BotFather)
+- macOS / Linux (the installer uses a Unix-style setup)
 
-## Installation
+## Quick start (recommended)
 
-1. Clone this repository or download the script file.
+1. Clone the repository:
 
-2. Install the dependencies by running the following command in your terminal:
-```
-pip install pyTelegramBotAPI SpeechRecognition
-```
-
-3. Install the ollama llama3.2:3b model.
-```
-ollama run llama3.2:3b
+```bash
+git clone https://github.com/platilich/Telegram-Bot-Voice-Transcription.git
+cd Telegram-Bot-Voice-Transcription
 ```
 
+2. Run the installer:
 
-4. Obtain a token for your Telegram bot by following the instructions in the official Telegram documentation.
-Usage
-
-1. Replace "your_token_here" in the code with your Telegram bot token.
-
-2. Run the Python script:
+```bash
+python3 installer.py
 ```
-python script_name.py
+
+3. When prompted, paste your bot token from BotFather.
+
+The installer will:
+
+- create a virtual environment (`venv/`)
+- install Python dependencies from `requirements.txt`
+- install [Ollama](https://ollama.com)
+- download the `llama3.2:3b` model
+- save your token to `config.py`
+
+4. Start the bot:
+
+```bash
+source venv/bin/activate
+python main.py
 ```
-3. Send a voice message to your Telegram bot. The bot will reply with the transcription of the audio.
 
-Notes
+Or without activating the venv:
 
-- This script utilizes the Google Speech Recognition API, so internet access is required to perform the transcription.
-- Ensure you have a good internet connection and that the audio sent to the bot is clear to obtain accurate transcription.
-- The script handles errors when processing the audio and will reply with an error message if any issues occur.
+```bash
+venv/bin/python main.py
+```
+
+5. Open Telegram, find your bot, send `/start`, pick a language, then send or forward a voice message.
+
+## Manual installation
+
+If you prefer to set things up yourself:
+
+1. Create and activate a virtual environment:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+2. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Install [Ollama](https://ollama.com) and pull the model:
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+ollama pull llama3.2:3b
+```
+
+4. Create `config.py` in the project root:
+
+```python
+token = 'YOUR_BOT_TOKEN_HERE'
+```
+
+5. Run the bot:
+
+```bash
+python main.py
+```
+
+## Usage
+
+| Command / action | Description |
+| --- | --- |
+| `/start` | Register and choose the interface language |
+| `/language` | Change language later |
+| Voice message | Bot replies with the transcription |
+
+Supported languages for the bot UI and recognition:
+
+- English
+- Қазақ (Kazakh)
+- Русский (Russian)
+
+## How it works
+
+1. The bot downloads the voice message
+2. Converts `.ogg` → `.wav`
+3. Transcribes audio with Google Speech Recognition (using the user’s selected language)
+4. Improves punctuation/spelling with Ollama (`llama3.2:3b`)
+5. Replies with the cleaned text
+
+## Notes
+
+- Internet access is required for speech recognition and for Ollama (if the model is served remotely; local Ollama still needs the model installed).
+- Clear audio gives better results.
+- If speech cannot be recognized, the bot replies with an error message.
+- Keep your bot token private — do not commit `config.py` with a real token.
+
+## Project structure
+
+```
+.
+├── main.py              # Bot entry point
+├── installer.py         # One-step setup script
+├── config.py            # Bot token (created by installer)
+├── requirements.txt
+├── bot/
+│   ├── handlers.py      # Commands and voice handling
+│   ├── sender_message.py
+│   └── translation.py
+├── utils/
+│   ├── recognition.py   # Speech-to-text
+│   ├── converter.py     # OGG → WAV
+│   ├── spelling.py      # Punctuation / spelling via Ollama
+│   └── ...
+└── db/
+    └── db.py            # User language preferences
+```
+
+## License
+
+See [LICENSE](LICENSE).
