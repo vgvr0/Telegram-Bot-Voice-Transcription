@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Hand:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Edu+VIC+WA+NT+Hand&display=swap');
 
 
 :root {
@@ -16,7 +16,7 @@ body {
     color: var(--tx);
 
 
-    font-family: "Edu VIC WA NT Hand", sans-serif;
+    font-family: "Comfortaa", sans-serif;
 
 
 
@@ -42,24 +42,22 @@ header {
 
     align-items: center;
 
-    padding: 0 0.5% 0 2%;
+    padding: 0 2% 0 2%;
 }
 
 
+.control_header {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    gap: 15%;
+
+}
+
 
 .log_out {
-    color: var(--bg);
-
-
-    font-size: 110%;
-
-    width: 80px;
-    height: 30px;
-
     transition: 1.5s;
-
-
-
 
 
     &:hover {
@@ -67,6 +65,8 @@ header {
         color: var(--tx);
     }
 }
+
+
 
 
 main {

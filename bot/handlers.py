@@ -4,7 +4,7 @@ from utils.recognition import voice_to_text
 from utils.download_file import download_voice_file
 
 from db.db import Users
-from bot.sender_message import send_message_with_keyboard, send_message_without_keyboard
+from bot.sender_message import send_message_with_keyboard, send_message_without_keyboard, send_message_with_admin_button
 from bot.translation import translate
 
 
@@ -46,6 +46,18 @@ def register_handlers(bot):
         answer = translate(user_id, 'select_language_')
 
         send_message_with_keyboard(bot, message, answer)
+
+
+
+
+    @bot.message_handler(commands=['admin'])
+    def admin_panel(message):
+        user_id = message.from_user.id
+
+
+        answer = translate(user_id, 'admin_panel_')
+        send_message_with_admin_button(bot, message, answer)
+
 
 
 
