@@ -32,6 +32,7 @@ class Users:
                     username TEXT,
                     language TEXT,
                     count_transcript INTEGER,
+                    block INTEGER NOT NULL DEFAULT 0,
                     registrate DATETIME DEFAULT CURRENT_TIMESTAMP,
                     last_message DATETIME
                 )
@@ -121,6 +122,44 @@ class Users:
             users = cursor.fetchall()
 
             return users
+
+
+
+    def privacy_block(self, user_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+
+
+            cursor.execute('SELECT block FROM Users WHERE user_id = ?', (user_id, ))
+            block = cursor.fetchone()
+
+
+            if block[0] == 1:
+                return True
+
+
+    def change_status_user(self, user_id):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+
+
+            if self.privacy_block(user_id):
+                cursor.execute('UPDATE Users SET block = ? WHERE user_id = ?', (0, user_id))
+
+
+            else:
+                cursor.execute('UPDATE Users SET block = ? WHERE user_id = ?', (1, user_id))
+
+
+            conn.commit()
+
+
+
+
+
+
+
+
 
 
 if __name__ == '__main__':

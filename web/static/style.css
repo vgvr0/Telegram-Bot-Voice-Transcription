@@ -94,6 +94,18 @@ main {
 }
 
 
+.control_card {
+    margin-top: 3%;
+}
+
+.control_card_btn {
+    background-color: var(--accent);
+    padding: 1%;
+    text-decoration: none;
+    border-radius: var(--radius);
+}
+
+
 .card__id {
     font-family: monospace, bold;
 }

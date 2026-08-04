@@ -5,8 +5,13 @@ from bot.send_news_letter import send_news
 from config import secret, LOGIN, PASSWORD
 from utils.passToHash import ExaminationHash
 
+from bot.send_message_to_user import send_message_to_user
+
+
+
 app = Flask(__name__)
 app.secret_key = secret
+
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -47,6 +52,45 @@ def newsletter():
         return redirect("/newsletter")
 
     return render_template("newsletter.html")
+
+
+
+@app.route("/change_status/<int:user_id>")
+def change_status(user_id):
+    if not session.get("ok"):
+        return redirect("/")
+
+
+    db = Users()
+    db.change_status_user(user_id)
+
+    return redirect("/home")
+
+
+
+@app.route("/send_message/<int:user_id>", methods=["GET", "POST"])
+def send_message(user_id):
+    if not session.get("ok"):
+        return redirect("/")
+
+
+
+    if request.method == "POST":
+        text = request.form.get("text")
+        if not text:
+            return render_template("send_message.html")
+
+
+
+        send_message_to_user(user_id, text)
+
+        return redirect(f"/send_message/{user_id}")
+
+
+
+    return render_template("send_message.html")
+
+
 
 
 @app.route("/logout")

@@ -30,12 +30,13 @@
         <p>username: {{ user[2] }}</p>
         <p>language: {{ user[3] }}</p>
         <p>count_transcript: {{ user[4] }}</p>
-        <p>registrate: {{ user[5] }}</p>
-        <p>last_message: {{ user[6] }}</p>
+        <p>banned: {{ "banned" if user[5] == 1 else "not banned" }}</p>
+        <p>registrate: {{ user[6] }}</p>
+        <p>last_message: {{ user[7] }}</p>
         <hr>
         <div class="control_card">
-            <button>Ban</button>
-            <button>Send message</button>
+            <a href="/change_status/{{ user[0] }}" class="control_card_btn">{{ "unblock" if user[5] == 1 else "block" }}</a>
+            <a href="/send_message/{{ user[0] }}" class="control_card_btn">Send message</a>
         </div>
     </div>
     {% endfor %}
