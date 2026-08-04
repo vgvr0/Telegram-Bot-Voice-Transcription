@@ -122,12 +122,9 @@ def register_handlers(bot):
             send_message_without_keyboard(bot, message, '⚙️ The language is installed')
 
 
-
-
-        elif text == '🇰🇿 Қазақ':
-            db.set_language(user_id, 'kk-KZ')
-            send_message_without_keyboard(bot, message, '⚙️ Тіл орнатылған')
-
+        elif text == '🇪🇸 España':
+            db.set_language(user_id, 'es-ES')
+            send_message_without_keyboard(bot, message, '⚙️ El idioma está instalado')
 
 
 
@@ -135,6 +132,11 @@ def register_handlers(bot):
             db.set_language(user_id, 'ru-RU')
             send_message_without_keyboard(bot, message, "⚙️ Язык установлен")
 
+
+
+        elif text == '🇰🇿 Қазақ':
+            db.set_language(user_id, 'kk-KZ')
+            send_message_without_keyboard(bot, message, '⚙️ Тіл орнатылған')
 
 
 

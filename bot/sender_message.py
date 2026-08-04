@@ -6,6 +6,7 @@ def language_selection_keyboard():
 
     keyboard.add(
         telebot.types.KeyboardButton(text="🇺🇸 English"),
+        telebot.types.KeyboardButton(text="🇪🇸 España"),
         telebot.types.KeyboardButton(text="🇰🇿 Қазақ"),
         telebot.types.KeyboardButton(text="🇷🇺 Русский")
     )
