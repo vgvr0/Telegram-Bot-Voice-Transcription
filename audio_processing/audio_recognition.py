@@ -1,5 +1,5 @@
 import speech_recognition as sr
-from database.db import Users
+from db.db import Users
 
 db = Users()
 

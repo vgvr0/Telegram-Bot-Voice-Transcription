@@ -2,13 +2,12 @@ from flask import Flask, render_template, redirect, session, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
-from database.db import Users
+from db.db import Users
 from admin_tools.broadcast_messages import send_news
 from config import SECRET, LOGIN, PASSWORD
-from utils.passToHash import ExaminationHash
 
 from admin_tools.direct_message import send_message_to_user
-
+from utils.privacyHash import ExaminationHash
 
 
 
@@ -22,7 +21,7 @@ limiter = Limiter(get_remote_address, app=app, default_limits=[])
 
 
 @app.route("/", methods=["GET", "POST"])
-@limiter.limit("3 per 10 minutes")
+@limiter.limit("3 per 5 minutes")
 def login():
     if request.method == "POST":
         if ExaminationHash(request.form["password"], PASSWORD) and ExaminationHash(request.form["login"], LOGIN):

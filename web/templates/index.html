@@ -36,7 +36,7 @@
         <hr>
         <div class="control_card">
             <a href="/change_status/{{ user[0] }}" class="control_card_btn">{{ "unblock" if user[5] == 1 else "block" }}</a>
-            <a href="/send_message/{{ user[0] }}" class="control_card_btn">Send message</a>
+            <a target="_blank" href="/send_message/{{ user[0] }}" class="control_card_btn">Send message</a>
         </div>
     </div>
     {% endfor %}

@@ -3,7 +3,7 @@ from audio_processing.file_converter import convert_ogg_to_wav
 from audio_processing.audio_recognition import voice_to_text
 from audio_processing.file_downloader import download_voice_file
 
-from database.db import Users
+from db.db import Users
 from bot_tools.message_sender import send_message_with_keyboard, send_message_without_keyboard, send_message_with_admin_button
 from utils.translation import translate
 from utils.remover_files import remove_old_files
