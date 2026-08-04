@@ -3,14 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 <body>
 
-<h1>BROAD CAST</h1>
-<form method="post">
-  <input type="text" name="text" placeholder="Enter text">
-  <button type="submit">SEND</button>
-</form>
+<header>
+    <h1 class="adminka">Adminka</h1>
+
+    <div class="control_header">
+        <a target="_blank" href="/newsletter">Newsletter</a>
+        <a class="log_out" href="/logout">Logout</a>
+    </div>
+
+
+</header>
+
+
+
+    <div class="broadcast_block">
+        <form method="post">
+
+            <h1>Broadcast</h1>
+            <input type="text" name="text" placeholder="Enter text">
+            <button type="submit">SEND</button>
+        </form>
+
+    </div>
+
+
+  <footer>
+    <p>vgvr0 & Plat Ilich</p>
+    <p>Telegram-Bot-Voice-Transcription</p>
+  </footer>
 
 
 </body>
