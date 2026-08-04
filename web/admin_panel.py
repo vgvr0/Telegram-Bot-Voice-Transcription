@@ -1,4 +1,6 @@
 from flask import Flask, render_template, redirect, session, request
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 from db.db import Users
 from bot.send_news_letter import send_news
@@ -9,17 +11,24 @@ from bot.send_message_to_user import send_message_to_user
 
 
 
+
+
 app = Flask(__name__)
 app.secret_key = secret
+
+limiter = Limiter(get_remote_address, app=app, default_limits=[])
+
 
 
 
 @app.route("/", methods=["GET", "POST"])
+@limiter.limit("3 per 10 minutes")
 def login():
     if request.method == "POST":
         if ExaminationHash(request.form["password"], PASSWORD) and ExaminationHash(request.form["login"], LOGIN):
             session["ok"] = True
             return redirect("/home")
+
         return render_template("login.html")
 
     return render_template("login.html")
@@ -100,4 +109,4 @@ def logout():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

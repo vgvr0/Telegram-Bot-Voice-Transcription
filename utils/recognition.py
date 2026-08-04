@@ -1,17 +1,16 @@
 import speech_recognition as sr
 from db.db import Users
-from utils.remover import remove_audio_files
 
 db = Users()
 
 
 
-def voice_to_text(user_id):
+def voice_to_text(user_id, message):
     # Transcribe the audio to text
 
     try:
         recognizer = sr.Recognizer()
-        with sr.AudioFile('audio/voice.wav') as source:
+        with sr.AudioFile(f'audio/{user_id}_{message.message_id}.wav') as source:
             audio_data = recognizer.record(source)
 
 
@@ -21,10 +20,7 @@ def voice_to_text(user_id):
             text = recognizer.recognize_google(audio_data, language=language)
 
 
-        remove_audio_files()
-
         return text
 
     except Exception as e:
-        remove_audio_files()
         return "Could not make out the speech."

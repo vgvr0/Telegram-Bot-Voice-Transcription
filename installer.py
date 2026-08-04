@@ -5,6 +5,10 @@ import sys
 from utils.passToHash import toHash
 
 
+
+# python -c "import secrets; print(secrets.token_hex(32))" ДЛЯ SECRET
+
+"""
 def setup(token, login, password):
     print("creating venv...")
     subprocess.run([sys.executable, "-m", "venv", "venv"], check=True)
@@ -43,15 +47,20 @@ def setup(token, login, password):
     print("Or:")
     print(f"  {python} main.py")
 
-
+"""
 if __name__ == "__main__":
-    token = input("Enter token (from BotFather in Telegram): ").strip()
-    login = input('Enter login for admin panel: ')
-    password = input('Enter password for admin panel: ')
+    #token = input("Enter token (from BotFather in Telegram): ").strip()
+    #login = input('Enter login for admin panel: ')
+    #password = input('Enter password for admin panel: ')
 
-    if not token or not login or not password:
-        print("Token is required.")
-        sys.exit(1)
+    #if not token or not login or not password:
+        #print("Token is required.")
+        #sys.exit(1)
+
+    print("installer don't work! ")
 
 
-    setup(token, login, password)
+    #setup(token, login, password)
+
+
+
