@@ -1,5 +1,5 @@
 import json
-from db.db import Users
+from database.db import Users
 
 
 db = Users()

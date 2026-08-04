@@ -1,7 +1,7 @@
 import telebot
 
 from config import token
-from bot.handlers import register_handlers
+from bot_tools.handlers import register_handlers
 
 
 

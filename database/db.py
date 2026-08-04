@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 # resolve DB relative to this file, not the process cwd
-_DEFAULT_DB_PATH = Path(__file__).resolve().parent / 'users.db'
+_DEFAULT_DB_PATH = Path(__file__).resolve().parent / 'users.database'
 
 
 class Users:

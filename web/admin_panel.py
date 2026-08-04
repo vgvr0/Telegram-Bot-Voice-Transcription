@@ -2,19 +2,19 @@ from flask import Flask, render_template, redirect, session, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
-from db.db import Users
-from bot.send_news_letter import send_news
-from config import secret, LOGIN, PASSWORD
+from database.db import Users
+from admin_tools.broadcast_messages import send_news
+from config import SECRET, LOGIN, PASSWORD
 from utils.passToHash import ExaminationHash
 
-from bot.send_message_to_user import send_message_to_user
+from admin_tools.direct_message import send_message_to_user
 
 
 
 
 
 app = Flask(__name__)
-app.secret_key = secret
+app.secret_key = SECRET
 
 limiter = Limiter(get_remote_address, app=app, default_limits=[])
 

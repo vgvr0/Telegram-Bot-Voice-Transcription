@@ -1,11 +1,13 @@
-from utils.spelling import fix_punctuation
-from utils.converter import convert_ogg_to_wav
-from utils.recognition import voice_to_text
-from utils.download_file import download_voice_file
+from audio_processing.text_cleaner import fix_punctuation
+from audio_processing.file_converter import convert_ogg_to_wav
+from audio_processing.audio_recognition import voice_to_text
+from audio_processing.file_downloader import download_voice_file
 
-from db.db import Users
-from bot.sender_message import send_message_with_keyboard, send_message_without_keyboard, send_message_with_admin_button
-from bot.translation import translate
+from database.db import Users
+from bot_tools.message_sender import send_message_with_keyboard, send_message_without_keyboard, send_message_with_admin_button
+from utils.translation import translate
+from utils.remover_files import remove_old_files
+
 
 from config import adminID
 
@@ -98,7 +100,12 @@ def register_handlers(bot):
 
         result = fix_punctuation(text)  # receive text with punctuation and spelling
 
+        remove_old_files(f"audio/{user_id}_{message.message_id}.ogg", f"audio/{user_id}_{message.message_id}.wav")
+
         bot.reply_to(message, result)
+
+
+
 
 
 
