@@ -111,6 +111,18 @@ class Users:
             return users
 
 
+
+
+    def get_all_users_id(self):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+
+            cursor.execute('SELECT user_id FROM Users')
+            users = cursor.fetchall()
+
+            return users
+
+
 if __name__ == '__main__':
     db = Users()
     db.get_users()
