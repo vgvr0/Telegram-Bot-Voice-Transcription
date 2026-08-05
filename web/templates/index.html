@@ -23,23 +23,25 @@
 <main>
 
 
-    {% for user in users %}
-    <div class="card">
-        <p class="card__id">ID: {{ user[0] }}</p>
-        <p>name: {{ user[1] }}</p>
-        <p>username: {{ user[2] }}</p>
-        <p>language: {{ user[3] }}</p>
-        <p>count_transcript: {{ user[4] }}</p>
-        <p>banned: {{ "banned" if user[5] == 1 else "not banned" }}</p>
-        <p>registrate: {{ user[6] }}</p>
-        <p>last_message: {{ user[7] }}</p>
-        <hr>
-        <div class="control_card">
-            <a href="/change_status/{{ user[0] }}" class="control_card_btn">{{ "unblock" if user[5] == 1 else "block" }}</a>
-            <a target="_blank" href="/send_message/{{ user[0] }}" class="control_card_btn">Send message</a>
+    <div class="cards">
+        {% for user in users %}
+        <div class="card">
+            <p class="card__id">ID: {{ user[0] }}</p>
+            <p>name: {{ user[1] }}</p>
+            <p>username: {{ user[2] }}</p>
+            <p>language: {{ user[3] }}</p>
+            <p>count_transcript: {{ user[4] }}</p>
+            <p>banned: {{ "banned" if user[5] == 1 else "not banned" }}</p>
+            <p>registrate: {{ user[6] }}</p>
+            <p>last_message: {{ user[7] }}</p>
+            <hr>
+            <div class="control_card">
+                <a href="/change_status/{{ user[0] }}" class="control_card_btn">{{ "unblock" if user[5] == 1 else "block" }}</a>
+                <a target="_blank" href="/send_message/{{ user[0] }}" class="control_card_btn">Send message</a>
+            </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 
 
 
