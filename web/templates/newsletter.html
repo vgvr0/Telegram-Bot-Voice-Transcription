@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+
+<header>
+    <h1 class="adminka">Adminka</h1>
+
+    <div class="control_header">
+        <a target="_blank" href="/newsletter">Newsletter</a>
+        <a class="log_out" href="/logout">Logout</a>
+    </div>
+
+
+</header>
+
+
+
+
+<main>
+    <form method="post" class="broadcast_form">
+
+        <h1>Broadcast</h1>
+        <input type="text" name="text" placeholder="Enter text">
+        <button type="submit">SEND</button>
+    </form>
+</main>
+
+
+  <footer>
+    <p>vgvr0 & Plat Ilich</p>
+    <p>Telegram-Bot-Voice-Transcription</p>
+  </footer>
+
+
+</body>
+</html>

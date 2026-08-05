@@ -1,7 +1,7 @@
 import telebot
 
 from config import token
-from bot.handlers import register_handlers
+from bot_tools.handlers import register_handlers
 
 
 
@@ -12,4 +12,4 @@ register_handlers(bot)
 
 
 if __name__ == '__main__':
-    bot.infinity_polling()
+    bot.polling()
