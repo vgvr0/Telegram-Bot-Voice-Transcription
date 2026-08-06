@@ -1,4 +1,21 @@
 import ollama
+import subprocess
+import time
+
+
+def start_ollama():
+    try:
+        subprocess.Popen(
+            ["ollama", "serve"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        time.sleep(2)
+
+
+
+    except Exception as e:
+        print(f"Failed to start Ollama: {e}")
 
 
 def fix_punctuation(text_from_user):

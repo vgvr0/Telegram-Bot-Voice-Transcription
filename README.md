@@ -2,107 +2,143 @@
 
 A Telegram bot that transcribes voice messages into text.
 
-You can forward voice messages from friends (or send your own), and the bot replies with the transcription. It supports multiple interface languages and uses AI to fix punctuation and spelling.
+Forward voice messages from friends (or send your own), and the bot replies with the transcription. It supports multiple interface languages and uses a local LLM via Ollama to fix punctuation and capitalization.
 
+---
 
 ## Features
 
-- Transcribes Telegram voice messages to text
-- Multi-language UI and speech recognition (English, Kazakh, Russian, Spanish)
-- Automatic punctuation and spelling fixes via Ollama (`llama3.2:3b`)
+- Converts Telegram voice messages to text
+- Multilingual interface and speech recognition: English, Spanish, Kazakh, Russian
+- Automatic correction of punctuation and capital letters using Ollama (`llama3.2:3b`)
+- SQLite user database (language, transcription counter, ban status)
+- Temporary audio files are deleted after processing
 
+
+---
+
+## How it works
+
+```
+Voice message (.ogg)
+        ↓
+   Download
+        ↓
+  Convert → .wav  (pydub / ffmpeg)
+        ↓
+ Google Speech Recognition  (user language)
+        ↓
+ Ollama llama3.2:3b  (punctuation & capitalization)
+        ↓
+  Reply with text
+```
+
+---
 
 ## Requirements
 
-- Python 3.x
-- Internet connection (Google Speech Recognition API + Ollama)
-- A Telegram bot token from [@BotFather](https://t.me/BotFather)
-- macOS / Linux (the installer uses a Unix-style setup)
+| Dependency | Purpose |
+| --- | --- |
+| Python 3.10+ | bot and admin panel |
+| [Telegram Bot Token](https://t.me/BotFather) | Telegram Bot API |
+| [Ollama](https://ollama.com) + `llama3.2:3b` | punctuation cleanup |
+| Internet | Google Speech Recognition API |
+| **ffmpeg** | OGG → WAV conversion via pydub |
+| macOS / Linux | recommended environment |
 
+---
 
+## Installation
 
-## Manual installation
-
-1. Clone the repository:
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/platilich/Telegram-Bot-Voice-Transcription.git
-cd Telegram-Bot-Voice-Transcription
+cd NoCloud-Voice-Bot
 ```
 
-
-2. Create and activate a virtual environment:
+### 2. Create a virtual environment
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-3Install dependencies:
+### 3. Install Python dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Install [Ollama](https://ollama.com) and pull the model:
+### 4. Install ffmpeg
+
+```bash
+# Ubuntu / Debian
+sudo apt install ffmpeg
+
+
+# macOS
+brew install ffmpeg
+```
+
+### 5. Install Ollama
 
 ```bash
 curl -fsSL https://ollama.com/install.sh | sh
+```
+
+Make sure Ollama is running (`ollama serve` or the system service).  
+You can pull the model manually, or let the bot do it on first start:
+
+```bash
 ollama pull llama3.2:3b
 ```
 
-5. Create `config.py` in the project root:
-Run config_build.py it's help you hash your login and password
+### 6. Configuration
+Create `config.py` in the project root:
 
 ```python
-token = 'YOUR_BOT_TOKEN_HERE'
-
-adminID = 123456789
-SECRET = "long_your_generated_secret"
-LOGIN = hashed_login
-PASSWORD = hashed_password
-
-
+token = "YOUR_BOT_TOKEN_FROM_BOTFATHER"
 ```
 
-5. Run the bot:
+---- 
+
+## Running
+To launch, run the command:
 
 ```bash
 python main.py
 ```
 
-## Usage
 
-| Command / action | Description |
+## Commands and usage
+
+| Action | Description |
 | --- | --- |
-| `/start` | Register and choose the interface language |
+| `/start` | Register and choose interface / recognition language |
 | `/language` | Change language later |
+| `/admin` | Open admin panel link (admin only) |
 | Voice message | Bot replies with the transcription |
 
-Supported languages for the bot UI and recognition:
+### Supported languages
 
-- English
-- Español (Spanish)
-- Қазақ (Kazakh)
-- Русский (Russian)
+| Language | Code |
+| --- | --- |
+| English | `en-US` |
+| Español | `es-ES` |
+| Қазақ | `kk-KZ` |
+| Русский | `ru-RU` |
 
+The selected language is used both for the bot UI and for Google Speech Recognition.
 
-## How it works
-
-1. The bot downloads the voice message
-2. Converts `.ogg` → `.wav`
-3. Transcribes audio with Google Speech Recognition (using the user’s selected language)
-4. Improves punctuation/spelling with Ollama (`llama3.2:3b`)
-5. Replies with the cleaned text
-
-## Notes
-
-- Clear audio gives better results.
-- If speech cannot be recognized, the bot replies with an error message.
-- Keep your bot token, secret, login, password private - DON'T COMMIT `config.py` with a real data.
-
+---
 
 ## License
 
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
 
-See [LICENSE](LICENSE).
+
+
+## Attribution
+
+This project was rewritten from scratch, inspired by: https://github.com/vgvr0/Telegram-Bot-Voice-Transcription

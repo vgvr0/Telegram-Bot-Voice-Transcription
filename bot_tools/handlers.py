@@ -1,15 +1,13 @@
-from audio_processing.text_cleaner import fix_punctuation
+from audio_processing.text_cleaner import fix_punctuation, start_ollama
 from audio_processing.file_converter import convert_ogg_to_wav
 from audio_processing.audio_recognition import voice_to_text
 from audio_processing.file_downloader import download_voice_file
 
 from db.db import Users
-from bot_tools.message_sender import send_message_with_keyboard, send_message_without_keyboard, send_message_with_admin_button
+from bot_tools.message_sender import send_message_with_keyboard, send_message_without_keyboard
 from utils.translation import translate
 from utils.remover_files import remove_old_files
 
-
-from config import adminID
 
 
 
@@ -17,20 +15,17 @@ db = Users()
 db.init_db()
 
 
+
+
 def register_handlers(bot):
     @bot.message_handler(commands=['start'])
     def welcome(message):
         user_id = message.from_user.id
         name = message.from_user.first_name
-        username = message.from_user.username
 
 
 
-        if db.privacy_block(user_id):
-            return
-
-
-        db.manage_user(user_id, name, username)
+        db.add_user(user_id)
 
 
         if db.get_language(user_id) is None:
@@ -51,33 +46,9 @@ def register_handlers(bot):
     def change_language(message):
         user_id = message.from_user.id
 
-        if db.privacy_block(user_id):
-            return
-
-
         answer = translate(user_id, 'select_language_')
 
         send_message_with_keyboard(bot, message, answer)
-
-
-
-
-    @bot.message_handler(commands=['admin'])
-    def admin_panel(message):
-        user_id = message.from_user.id
-
-
-        if db.privacy_block(user_id):
-            return
-
-
-        if user_id != adminID:
-            return
-
-
-        answer = translate(user_id, 'admin_panel_')
-        send_message_with_admin_button(bot, message, answer)
-
 
 
 
@@ -87,16 +58,14 @@ def register_handlers(bot):
         user_id = message.from_user.id
 
 
-        if db.privacy_block(user_id):
-            return
-
-
-
         download_voice_file(bot, user_id, message)
 
         convert_ogg_to_wav(f'audio/{user_id}_{message.message_id}.ogg', f"audio/{user_id}_{message.message_id}.wav")
 
         text = voice_to_text(user_id, message)
+
+
+        start_ollama()
 
         result = fix_punctuation(text)  # receive text with punctuation and spelling
 
@@ -108,17 +77,9 @@ def register_handlers(bot):
 
 
 
-
-
-
-
     @bot.message_handler(content_types=['text'])
     def text_input(message):
         user_id = message.from_user.id
-
-        if db.privacy_block(user_id):
-            return
-
 
         text = message.text
 

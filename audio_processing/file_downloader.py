@@ -1,4 +1,4 @@
-
+import os
 
 
 def download_voice_file(bot, user_id, message):
@@ -6,6 +6,8 @@ def download_voice_file(bot, user_id, message):
     downloaded_file = bot.download_file(file_info.file_path)
 
 
+    if not os.path.isdir("audio"):
+        os.mkdir('audio')
 
 
     with open(f"audio/{user_id}_{message.message_id}.ogg", 'wb') as f:

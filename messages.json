@@ -1,21 +1,20 @@
 {
-  "welcome_msg_en-US": "👋 Hi, <b>name</b>! I’m a bot you can forward 🎙 voice messages from friends to, and I’ll send you the transcription. Change language - /language",
-  "welcome_msg_es-ES": "👋 ¡Hola, <b>name</b>! Soy un bot al que puedes reenviar 🎙 mensajes de voz de amigos, y te enviaré la transcripción. Cambiar idioma - /language",
-  "welcome_msg_kk-KZ": "👋 Сәлем, <b>name</b>! Мен — достарыңнан келген 🎙 дауыстық хабарламаларды маған жіберсең, олардың мәтінге айналған нұсқасын жіберетін ботпын. Тілді өзгерту — /language",
-  "welcome_msg_ru-RU": "👋 Привет, <b>name</b>! Я бот, которому ты можешь пересылать 🎙 голосовые сообщения от друзей, а я пришлю тебе их расшифровку. Сменить язык — /language",
+  "welcome_msg_en-US": "👋 Hi, <b>name</b>! Welcome 😊 Forward me 🎙 voice messages from your friends, and I’ll happily send you the transcription ✨ Change language — /language",
+  "welcome_msg_es-ES": "👋 ¡Hola, <b>name</b>! Bienvenido/a 😊 Reenvíame 🎙 mensajes de voz de tus amigos y con gusto te enviaré la transcripción ✨ Cambiar idioma — /language",
+  "welcome_msg_kk-KZ": "👋 Сәлем, <b>name</b>! Қош келдіңіз 😊 Достарыңыздан келген 🎙 дауыстық хабарламаларды маған жіберіңіз, мен сізге олардың мәтінге айналған нұсқасын қуана жіберемін ✨ Тілді өзгерту — /language",
+  "welcome_msg_ru-RU": "👋 Привет, <b>name</b>! Добро пожаловать 😊 Пересылай мне 🎙 голосовые сообщения от друзей, и я с радостью пришлю тебе их расшифровку ✨ Сменить язык — /language",
+  "select_language_en-US": "Please choose your language 👇",
+  "select_language_es-ES": "Por favor, elige tu idioma 👇",
+  "select_language_kk-KZ": "Өтінемін, тіліңізді таңдаңыз 👇",
+  "select_language_ru-RU": "Пожалуйста, выберите язык 👇",
 
-  "select_language_en-US": "Select language 👇",
-  "select_language_es-ES": "Selecciona el idioma 👇",
-  "select_language_kk-KZ": "Тілді таңдаңыз 👇",
-  "select_language_ru-RU": "Выберите язык 👇",
+  "unknow_text_en-US": "Sorry, I can’t process text yet, but I’m always here to help with voice messages 🙏",
+  "unknow_text_es-ES": "Lo siento, todavía no puedo procesar texto, pero siempre estaré aquí para ayudarte con mensajes de voz 🙏",
+  "unknow_text_kk-KZ": "Кешіріңіз, әзірге мәтінді өңдей алмаймын, бірақ дауыстық хабарламалармен көмектесуге әрқашан дайынмын 🙏",
+  "unknow_text_ru-RU": "Прости, я пока не умею обрабатывать текст, но всегда с радостью помогу с голосовыми сообщениями 🙏",
 
-  "unknow_text_en-US": "Sorry, but I don't know how to process text.",
-  "unknow_text_es-ES": "Lo siento, pero no sé cómo procesar texto.",
-  "unknow_text_kk-KZ": "Кешіріңіз, бірақ мәтінді қалай өңдеу керектігін білмеймін.",
-  "unknow_text_ru-RU": "Прости, но я не умею обрабатывать текст",
-
-  "admin_panel_en-US": "Click on the button below 👇 to open the admin panel for user management.",
-  "admin_panel_es-ES": "Haz clic en el botón de abajo 👇 para abrir el panel de administración para gestionar usuarios.",
-  "admin_panel_kk-KZ": "Ашу үшін төмендегі түймені басыңыз 👇 пайдаланушыларды басқаруға арналған басқару тақтасы.",
-  "admin_panel_ru-RU": "Нажмите на кнопку ниже 👇 чтобы открыть админ панель для управления пользователями."
+  "admin_panel_en-US": "Tap the button below to open the admin panel 👇",
+  "admin_panel_es-ES": "Pulsa el botón de abajo para abrir el panel de administración 👇",
+  "admin_panel_kk-KZ": "Әкімшілік панелін ашу үшін төмендегі түймені басыңыз 👇",
+  "admin_panel_ru-RU": "Нажмите кнопку ниже, чтобы открыть админ-панель 👇"
 }

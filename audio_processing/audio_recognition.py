@@ -6,7 +6,7 @@ db = Users()
 
 
 def voice_to_text(user_id, message):
-    # Transcribe the audio to text
+    # transcribe the audio to text
 
     try:
         recognizer = sr.Recognizer()

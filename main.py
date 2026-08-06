@@ -4,8 +4,8 @@ from config import token
 from bot_tools.handlers import register_handlers
 
 
-
 bot = telebot.TeleBot(token)
+
 
 register_handlers(bot)
 
