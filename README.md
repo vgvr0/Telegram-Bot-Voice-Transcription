@@ -104,11 +104,12 @@ token = "YOUR_BOT_TOKEN_FROM_BOTFATHER"
 ---- 
 
 ## Running
-To launch, run the command:
+To set up the bot as a systemd service, run:
 
 ```bash
-python main.py
+sudo python installer.py
 ```
+
 
 
 ## Commands and usage

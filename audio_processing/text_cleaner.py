@@ -2,9 +2,13 @@ import ollama
 import subprocess
 import time
 
+from logs.record_log import log_info, log_error
+
 
 def start_ollama():
     try:
+        log_info('launching ollama')
+
         subprocess.Popen(
             ["ollama", "serve"],
             stdout=subprocess.DEVNULL,
@@ -15,11 +19,16 @@ def start_ollama():
 
 
     except Exception as e:
+        log_error(f"Failed to start Ollama: {e}")
         print(f"Failed to start Ollama: {e}")
 
 
 def fix_punctuation(text_from_user):
     try:
+        start_ollama()
+
+        log_info('running fix_punctuation we will work on the text')
+
         model_name = 'llama3.2:3b'
 
         system_prompt = (
@@ -73,4 +82,4 @@ def fix_punctuation(text_from_user):
 
 
     except Exception as e:
-        print(e)
+        log_error(f"could't punctuate the error in the file text_cleaner.py: {e}")

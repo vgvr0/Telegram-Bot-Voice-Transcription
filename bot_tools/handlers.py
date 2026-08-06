@@ -1,4 +1,4 @@
-from audio_processing.text_cleaner import fix_punctuation, start_ollama
+from audio_processing.text_cleaner import fix_punctuation
 from audio_processing.file_converter import convert_ogg_to_wav
 from audio_processing.audio_recognition import voice_to_text
 from audio_processing.file_downloader import download_voice_file
@@ -22,8 +22,6 @@ def register_handlers(bot):
     def welcome(message):
         user_id = message.from_user.id
         name = message.from_user.first_name
-
-
 
         db.add_user(user_id)
 
@@ -64,8 +62,6 @@ def register_handlers(bot):
 
         text = voice_to_text(user_id, message)
 
-
-        start_ollama()
 
         result = fix_punctuation(text)  # receive text with punctuation and spelling
 
@@ -110,5 +106,4 @@ def register_handlers(bot):
 
         else:
             answer = translate(user_id, 'unknow_text_', )
-
             send_message_without_keyboard(bot, message, answer)

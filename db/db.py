@@ -1,6 +1,7 @@
 import sqlite3
 from pathlib import Path
 
+from logs.record_log import log_info, log_error
 
 # resolve DB relative to this file, not the process cwd
 _DEFAULT_DB_PATH = Path(__file__).resolve().parent / 'users.db'
@@ -17,6 +18,10 @@ class Users:
 
     def init_db(self):
         try:
+
+            log_info('DB | init_db')
+
+
             with self.get_connection() as conn:
                 cursor = conn.cursor()
 
@@ -36,11 +41,13 @@ class Users:
                 conn.commit()
 
         except Exception as e:
-            print(e)
+            log_error(f'DB | error during db initialization: {e}')
 
 
     def add_user(self, user_id):
         try:
+            log_info('DB | add_user')
+
             with self.get_connection() as conn:
                 cursor = conn.cursor()
 
@@ -59,12 +66,14 @@ class Users:
                 conn.commit()
 
         except Exception as e:
-            print(e)
+            log_error(f'DB | error when adding a user: {e}')
 
 
 
     def set_language(self, user_id, language):
         try:
+            log_info('DB | set_language')
+
             with self.get_connection() as conn:
                 cursor = conn.cursor()
 
@@ -76,13 +85,15 @@ class Users:
                 conn.commit()
 
         except Exception as e:
-            print(e)
+            log_error(f'DB | error in set_language: {e}')
 
 
 
 
     def get_language(self, user_id):
         try:
+            log_info('DB | get_language')
+
             with self.get_connection() as conn:
                 cursor = conn.cursor()
 
@@ -95,4 +106,4 @@ class Users:
 
 
         except Exception as e:
-            print(e)
+            log_error(f'DB | error in get_language: {e}')
