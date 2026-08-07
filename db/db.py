@@ -1,7 +1,7 @@
 import sqlite3
 from pathlib import Path
-from datetime import datetime
 
+from logs.record_log import log_info, log_error
 
 # resolve DB relative to this file, not the process cwd
 _DEFAULT_DB_PATH = Path(__file__).resolve().parent / 'users.db'
@@ -18,6 +18,10 @@ class Users:
 
     def init_db(self):
         try:
+
+            log_info('DB | init_db')
+
+
             with self.get_connection() as conn:
                 cursor = conn.cursor()
 
@@ -27,13 +31,8 @@ class Users:
                     '''
                     CREATE TABLE IF NOT EXISTS Users (
                         user_id INTEGER PRIMARY KEY,
-                        name TEXT,
-                        username TEXT,
                         language TEXT,
-                        count_transcript INTEGER,
-                        block INTEGER NOT NULL DEFAULT 0,
-                        registrate DATETIME DEFAULT CURRENT_TIMESTAMP,
-                        last_message DATETIME
+                        count_transcript INTEGER
                     )
                     '''
                 )
@@ -42,12 +41,12 @@ class Users:
                 conn.commit()
 
         except Exception as e:
-            print(e)
+            log_error(f'DB | error during db initialization: {e}')
 
 
-    def manage_user(self, user_id, name, username):
+    def add_user(self, user_id):
         try:
-            now = datetime.now().astimezone()
+            log_info('DB | add_user')
 
             with self.get_connection() as conn:
                 cursor = conn.cursor()
@@ -59,26 +58,22 @@ class Users:
 
                 if user is None:
                     cursor.execute(
-                        '''INSERT INTO Users (user_id, name, username, count_transcript, registrate, last_message)
-                           VALUES (?, ?, ?, ?, ?, ?)''',
-                        (user_id, name, username, 0, now, now)
+                        '''INSERT INTO Users (user_id)
+                           VALUES (?)''',
+                        (user_id, )
                     )
-
-
-                else:
-                    cursor.execute('''UPDATE Users SET name = ?, username = ?, last_message = ? WHERE user_id = ? ''', (name, username, now, user_id))
-                    cursor.execute('UPDATE Users SET count_transcript = count_transcript + 1 WHERE user_id = ?', (user_id,))
-
 
                 conn.commit()
 
         except Exception as e:
-            print(e)
+            log_error(f'DB | error when adding a user: {e}')
 
 
 
     def set_language(self, user_id, language):
         try:
+            log_info('DB | set_language')
+
             with self.get_connection() as conn:
                 cursor = conn.cursor()
 
@@ -90,15 +85,15 @@ class Users:
                 conn.commit()
 
         except Exception as e:
-            print(e)
-
-
+            log_error(f'DB | error in set_language: {e}')
 
 
 
 
     def get_language(self, user_id):
         try:
+            log_info('DB | get_language')
+
             with self.get_connection() as conn:
                 cursor = conn.cursor()
 
@@ -111,91 +106,4 @@ class Users:
 
 
         except Exception as e:
-            print(e)
-
-
-    def get_users(self):
-        try:
-            with self.get_connection() as conn:
-                cursor = conn.cursor()
-
-
-                cursor.execute('SELECT * FROM Users')
-                users = cursor.fetchall()
-
-
-                print(users)
-                return users
-
-
-        except Exception as e:
-            print(e)
-
-
-
-
-    def get_all_users_id(self):
-        try:
-            with self.get_connection() as conn:
-                cursor = conn.cursor()
-
-                cursor.execute('SELECT user_id FROM Users')
-                users = cursor.fetchall()
-
-                return users
-
-
-        except Exception as e:
-            print(e)
-
-
-    def privacy_block(self, user_id):
-        try:
-            with self.get_connection() as conn:
-                cursor = conn.cursor()
-
-
-                cursor.execute('SELECT block FROM Users WHERE user_id = ?', (user_id, ))
-                block = cursor.fetchone()
-
-                if block is None:
-                    return False
-
-                if block[0] == 1:
-                    return True
-
-        except Exception as e:
-            print(e)
-
-
-
-    def change_status_user(self, user_id):
-        try:
-            with self.get_connection() as conn:
-                cursor = conn.cursor()
-
-
-                if self.privacy_block(user_id):
-                    cursor.execute('UPDATE Users SET block = ? WHERE user_id = ?', (0, user_id))
-
-
-                else:
-                    cursor.execute('UPDATE Users SET block = ? WHERE user_id = ?', (1, user_id))
-
-
-                conn.commit()
-
-        except Exception as e:
-            print(e)
-
-
-
-
-
-
-
-
-
-if __name__ == '__main__':
-    db = Users()
-    db.get_users()
+            log_error(f'DB | error in get_language: {e}')
