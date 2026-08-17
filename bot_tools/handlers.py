@@ -1,4 +1,4 @@
-from audio_processing.text_cleaner import fix_punctuation
+from audio_processing.text_cleaner import fix_punctuation_v2
 from audio_processing.file_converter import convert_ogg_to_wav
 from audio_processing.audio_recognition import voice_to_text
 from audio_processing.file_downloader import download_voice_file
@@ -63,7 +63,7 @@ def register_handlers(bot):
         text = voice_to_text(user_id, message)
 
 
-        result = fix_punctuation(text)  # receive text with punctuation and spelling
+        result = fix_punctuation_v2(text)  # receive text with punctuation and spelling
 
         remove_old_files(f"audio/{user_id}_{message.message_id}.ogg", f"audio/{user_id}_{message.message_id}.wav")
 

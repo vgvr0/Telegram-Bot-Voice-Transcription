@@ -1,10 +1,10 @@
 import telebot
 
-from config import token
+from config import tg_token
 from bot_tools.handlers import register_handlers
 
 
-bot = telebot.TeleBot(token)
+bot = telebot.TeleBot(tg_token)
 
 
 register_handlers(bot)
