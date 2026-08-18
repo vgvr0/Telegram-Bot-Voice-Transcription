@@ -1,29 +1,28 @@
-import speech_recognition as sr
-from db.db import Users
-from logs.record_log import log_info, log_error
+from faster_whisper import WhisperModel
+from logger import logger
 
-db = Users()
-
-
-
-def voice_to_text(user_id, message):
+def recognition(file_path):
     try:
-        log_info('Processing audio => text')
-        recognizer = sr.Recognizer()
+        logger.info('audio_recognition | recognition')
 
-        with sr.AudioFile(f'audio/{user_id}_{message.message_id}.wav') as source:
-            audio_data = recognizer.record(source)
+        model = WhisperModel(
+            "small",
+            device="cpu",
+            compute_type="int8",
+            num_workers=1
+        )
+
+        segments, info = model.transcribe(file_path, language=None)
+
+        text_list = []
+        for segment in segments:
+            text_list.append(segment.text)
+
+        full_text = " ".join(text_list)
 
 
-            language = db.get_language(user_id)
-
-
-            text = recognizer.recognize_google(audio_data, language=language)
-
-
-        return text
+        return full_text
 
 
     except Exception as e:
-        log_error(f'An error occurred in the audio_recognization file: {e}')
-        return "Could not make out the speech."
+        logger.error(f'audio_recognition | error: {e}')
