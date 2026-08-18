@@ -1,12 +1,15 @@
 import telebot
 
-from config import token
-from bot_tools.handlers import register_handlers
+from config import tg_token
+from handlers import register_handlers
+
+from logger import logger
 
 
-bot = telebot.TeleBot(token)
+bot = telebot.TeleBot(tg_token)
 
 
+logger.info('bot started')
 register_handlers(bot)
 
 

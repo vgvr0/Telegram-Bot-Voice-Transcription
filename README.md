@@ -2,16 +2,14 @@
 
 A Telegram bot that transcribes voice messages into text.
 
-Forward voice messages from friends (or send your own), and the bot replies with the transcription. It supports multiple interface languages and uses a local LLM via Ollama to fix punctuation and capitalization.
+Forward voice messages from friends (or send your own), and the bot replies with the transcription.
 
 ---
 
 ## Features
 
 - Converts Telegram voice messages to text
-- Multilingual interface and speech recognition: English, Spanish, Kazakh, Russian
-- Automatic correction of punctuation and capital letters using Ollama (`llama3.2:3b`)
-- SQLite user database (language, transcription counter, ban status)
+- Support 99 languages
 - Temporary audio files are deleted after processing
 
 
@@ -24,11 +22,7 @@ Voice message (.ogg)
         ↓
    Download
         ↓
-  Convert → .wav  (pydub / ffmpeg)
-        ↓
- Google Speech Recognition  (user language)
-        ↓
- Ollama llama3.2:3b  (punctuation & capitalization)
+   Faster_whisper (audio to text, support 99 languages)
         ↓
   Reply with text
 ```
@@ -41,9 +35,6 @@ Voice message (.ogg)
 | --- | --- |
 | Python 3.10+ | bot and admin panel |
 | [Telegram Bot Token](https://t.me/BotFather) | Telegram Bot API |
-| [Ollama](https://ollama.com) + `llama3.2:3b` | punctuation cleanup |
-| Internet | Google Speech Recognition API |
-| **ffmpeg** | OGG → WAV conversion via pydub |
 | macOS / Linux | recommended environment |
 
 ---
@@ -54,7 +45,7 @@ Voice message (.ogg)
 
 ```bash
 git clone https://github.com/platilich/Telegram-Bot-Voice-Transcription.git
-cd NoCloud-Voice-Bot
+cd Telegram-Bot-Voice-Transcription
 ```
 
 ### 2. Create a virtual environment
@@ -70,69 +61,23 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Install ffmpeg
 
-```bash
-# Ubuntu / Debian
-sudo apt install ffmpeg
-
-
-# macOS
-brew install ffmpeg
-```
-
-### 5. Install Ollama
-
-```bash
-curl -fsSL https://ollama.com/install.sh | sh
-```
-
-Make sure Ollama is running (`ollama serve` or the system service).  
-You can pull the model manually, or let the bot do it on first start:
-
-```bash
-ollama pull llama3.2:3b
-```
-
-### 6. Configuration
+### 4. Configuration
 Create `config.py` in the project root:
 
 ```python
-token = "YOUR_BOT_TOKEN_FROM_BOTFATHER"
-```
-
----- 
-
-## Running
-To set up the bot as a systemd service, run:
-
-```bash
-sudo python installer.py
+tg_token = 'your_token_from_bot_father'
 ```
 
 
 
 ## Commands and usage
 
-| Action | Description |
-| --- | --- |
-| `/start` | Register and choose interface / recognition language |
-| `/language` | Change language later |
-| `/admin` | Open admin panel link (admin only) |
+| Action | Description                        |
+| --- |------------------------------------|
+| `/start` | Launch the bot                     |
 | Voice message | Bot replies with the transcription |
 
-### Supported languages
-
-| Language | Code |
-| --- | --- |
-| English | `en-US` |
-| Español | `es-ES` |
-| Қазақ | `kk-KZ` |
-| Русский | `ru-RU` |
-
-The selected language is used both for the bot UI and for Google Speech Recognition.
-
----
 
 ## License
 
